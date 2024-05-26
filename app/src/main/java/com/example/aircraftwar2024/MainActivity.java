@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,9 +21,13 @@ public class MainActivity extends AppCompatActivity {
         startButton = findViewById(R.id.start_button);
         bgmGroup = findViewById(R.id.bgm_group);
 
+
         startButton.setOnClickListener(view -> {
+            String selectText = ((RadioButton)findViewById(bgmGroup.getCheckedRadioButtonId())).getText().toString();
+            boolean bgmOn = selectText.equals("开启音效");
+
             Intent intent = new Intent(MainActivity.this, OfflineActivity.class);
-            // TODO 应用 intent.putExtra 将音乐是否开启作为参数传递
+            intent.putExtra("bgm", bgmOn);
 
             startActivity(intent);
         });

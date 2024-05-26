@@ -15,7 +15,7 @@
         android:src="@drawable/bg_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -29,21 +29,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.748"
+        app:layout_constraintVertical_bias="0.689"
         tools:ignore="MissingConstraints" />
 
     <RadioGroup
         android:id="@+id/bgm_group"
-        android:layout_width="154dp"
-        android:layout_height="116dp"
+        android:layout_width="115dp"
+        android:layout_height="117dp"
+        android:layout_gravity="center_horizontal"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/start_button"
-        android:layout_gravity="center_horizontal"
-        app:layout_constraintVertical_bias="0.923" >
+        app:layout_constraintVertical_bias="0.554">
 
         <RadioButton
             android:id="@+id/bgm_on"
