@@ -467,12 +467,14 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     }
 
     private void paintScoreAndLife() {
-        /**TODO:动态绘制文本框显示英雄机的分数和生命值**/
+        canvas.drawText("Score:" + score, 0, 0, mPaint);
+        canvas.drawText("Life:" + heroAircraft.getHp(), 0, 0, mPaint);
     }
 
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
-        /*TODO*/
+        mbLoop = true;
+        new Thread(this).start();
     }
 
     @Override
@@ -483,11 +485,13 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
-        /*TODO*/
+        mbLoop = false;
     }
 
     @Override
     public void run() {
-        /*TODO*/
+        while (mbLoop) {
+            draw();
+        }
     }
 }
