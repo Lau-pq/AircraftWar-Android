@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -467,8 +468,13 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     }
 
     private void paintScoreAndLife() {
-        canvas.drawText("Score:" + score, 0, 0, mPaint);
-        canvas.drawText("Life:" + heroAircraft.getHp(), 0, 0, mPaint);
+        mPaint.setTextSize(80);
+        mPaint.setColor(Color.RED);
+        mPaint.setTypeface(Typeface.create("my", Typeface.BOLD_ITALIC));
+
+        canvas.drawText("Score:" + score, 10, 100, mPaint);
+        canvas.drawText("Life:" + heroAircraft.getHp(), 10, 180, mPaint);
+
     }
 
     @Override
