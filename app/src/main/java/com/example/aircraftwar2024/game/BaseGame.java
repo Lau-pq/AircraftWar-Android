@@ -12,13 +12,17 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import androidx.annotation.NonNull;
-import com.example.aircraftwar2024.ImageManager;
+
+import com.example.aircraftwar2024.aircraft.EliteEnemy;
+import com.example.aircraftwar2024.aircraft.MobEnemy;
+import com.example.aircraftwar2024.application.ImageManager;
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.aircraft.AbstractAircraft;
 import com.example.aircraftwar2024.aircraft.AbstractEnemyAircraft;
 import com.example.aircraftwar2024.aircraft.BossEnemy;
 import com.example.aircraftwar2024.aircraft.HeroAircraft;
 import com.example.aircraftwar2024.basic.AbstractFlyingObject;
+import com.example.aircraftwar2024.basic.FlyingsObserver;
 import com.example.aircraftwar2024.bullet.AbstractBullet;
 import com.example.aircraftwar2024.factory.enemy_factory.BossFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.EliteFactory;
@@ -91,7 +95,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      */
     private final int timeInterval = 16;
 
-    private final HeroAircraft heroAircraft;
+    private HeroAircraft heroAircraft;
 
     protected final List<AbstractEnemyAircraft> enemyAircrafts;
     private final List<AbstractFlyingSupply> flyingSupplies;
@@ -134,7 +138,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public BaseGame(Context context){
         super(context);
 
-        mbLoop = true;
         mPaint = new Paint();  //设置画笔
         mSurfaceHolder = this.getHolder();
         mSurfaceHolder.addCallback(this);
@@ -371,7 +374,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
                         //获得分数，产生道具补给
-                        score += enemyAircraft.score();
+                        score += enemyAircraft.getScore();
                         flyingSupplies.addAll(enemyAircraft.generateSupplies());
                     }
                 }
@@ -389,6 +392,17 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                 continue;
             }
             if (heroAircraft.crash(flyingSupply) || flyingSupply.crash(heroAircraft)) {
+                if (flyingSupply instanceof BombSupply) {
+                    for (AbstractEnemyAircraft enemyAircraft: enemyAircrafts) {
+                        ((BombSupply) flyingSupply).addflyingsObserver(enemyAircraft);
+                        if (enemyAircraft instanceof MobEnemy || enemyAircraft instanceof EliteEnemy) {
+                            score += enemyAircraft.getScore();
+                        }
+                    }
+                    for (AbstractBullet enemyBullet: enemyBullets) {
+                        ((BombSupply) flyingSupply).addflyingsObserver((FlyingsObserver) enemyBullet);
+                    }
+                }
                 flyingSupply.activate();
                 flyingSupply.vanish();
             }
@@ -411,7 +425,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
-            mbLoop = false;
+            heroAircraft = null;
             Log.i(TAG, "heroAircraft is not Valid");
         }
 
@@ -498,6 +512,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public void run() {
         while (mbLoop) {
             action();
-            draw();}
+            draw();
+        }
     }
 }

@@ -2,7 +2,7 @@ package com.example.aircraftwar2024.basic;
 
 import android.graphics.Bitmap;
 
-import com.example.aircraftwar2024.ImageManager;
+import com.example.aircraftwar2024.application.ImageManager;
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.aircraft.AbstractAircraft;
 

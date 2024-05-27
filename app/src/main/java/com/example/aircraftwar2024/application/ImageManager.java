@@ -1,9 +1,10 @@
-package com.example.aircraftwar2024;
+package com.example.aircraftwar2024.application;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.aircraft.BossEnemy;
 import com.example.aircraftwar2024.aircraft.EliteEnemy;
 import com.example.aircraftwar2024.aircraft.HeroAircraft;

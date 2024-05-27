@@ -1,7 +1,9 @@
 package com.example.aircraftwar2024.supply;
 
 
-import java.util.LinkedList;
+import com.example.aircraftwar2024.basic.FlyingsObserver;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,9 +22,22 @@ public class BombSupply extends AbstractFlyingSupply {
         super(locationX, locationY, speedX, speedY);
     }
 
+    private List<FlyingsObserver> flyingsObserverList = new ArrayList<>();
+
+    public void addflyingsObserver(FlyingsObserver flyingsObserver) {
+        flyingsObserverList.add(flyingsObserver);
+    }
+
+    public void notifyAllFlyings() {
+        for (FlyingsObserver flyingsObserver : flyingsObserverList) {
+            flyingsObserver.update();
+        }
+    }
+
     @Override
     public void activate() {
         System.out.println("BombSupply active");
+        notifyAllFlyings();
     }
 
 }
