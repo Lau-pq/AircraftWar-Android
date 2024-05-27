@@ -1,4 +1,4 @@
-package com.example.aircraftwar2024;
+package com.example.aircraftwar2024.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.example.aircraftwar2024.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
 
         startButton = findViewById(R.id.start_button);
         bgmGroup = findViewById(R.id.bgm_group);
-
 
         startButton.setOnClickListener(view -> {
             String selectText = ((RadioButton)findViewById(bgmGroup.getCheckedRadioButtonId())).getText().toString();

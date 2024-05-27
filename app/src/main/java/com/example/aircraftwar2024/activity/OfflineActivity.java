@@ -1,8 +1,10 @@
-package com.example.aircraftwar2024;
+package com.example.aircraftwar2024.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.aircraftwar2024.R;
 
 public class OfflineActivity extends AppCompatActivity {
 
