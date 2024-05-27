@@ -467,8 +467,11 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     }
 
     private void paintScoreAndLife() {
-        canvas.drawText("Score:" + score, 0, 0, mPaint);
-        canvas.drawText("Life:" + heroAircraft.getHp(), 0, 0, mPaint);
+        mPaint.setTextSize(20);
+        mPaint.setColor(Color.RED);
+        canvas.drawText("Score:" + score, 0, 100, mPaint);
+        canvas.drawText("Life:" + heroAircraft.getHp(), 0, 100, mPaint);
+        
     }
 
     @Override
