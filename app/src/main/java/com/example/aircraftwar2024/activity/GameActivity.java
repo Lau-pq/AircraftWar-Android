@@ -1,5 +1,6 @@
 package com.example.aircraftwar2024.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,7 +34,13 @@ public class GameActivity extends AppCompatActivity {
         }
 
         /*TODO:根据用户选择的难度加载相应的游戏界面*/
-        BaseGame baseGameView = null;
+        BaseGame baseGameView;
+        switch (gameType) {
+            case 1 -> baseGameView = new EasyGame(this);
+            case 2 -> baseGameView = new MediumGame(this);
+            case 3 -> baseGameView = new HardGame(this);
+            default -> baseGameView = null;
+        }
         setContentView(baseGameView);
     }
 
