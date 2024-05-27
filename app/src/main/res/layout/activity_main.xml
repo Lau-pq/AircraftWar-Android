@@ -24,7 +24,7 @@
         android:id="@+id/start_button"
         android:layout_width="115dp"
         android:layout_height="55dp"
-        android:text="开始游戏"
+        android:text="@string/offlineStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
             android:id="@+id/bgm_on"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="开启音效"
+            android:text="@string/bgmOn"
             android:textColor="@color/white" />
 
         <RadioButton
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:checked="true"
-            android:text="关闭音效"
+            android:text="@string/bgmOff"
             android:textColor="@color/white" />
     </RadioGroup>
 

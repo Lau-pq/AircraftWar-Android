@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">AircraftWar2024</string>
+    <string name="offlineStart">单机游戏</string>
+    <string name="bgmOn">开启音效</string>
+    <string name="bgmOff">关闭音效</string>
+    <string name="modeChoose">单机模式难度选择</string>
+    <string name="easyMode">简单模式</string>
+    <string name="normalMode">普通模式</string>
+    <string name="hardMode">困难模式</string>
 </resources>
