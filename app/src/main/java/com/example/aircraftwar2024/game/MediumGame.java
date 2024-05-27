@@ -1,7 +1,7 @@
 package com.example.aircraftwar2024.game;
 
 import android.content.Context;
-import com.example.aircraftwar2024.ImageManager;
+import com.example.aircraftwar2024.application.ImageManager;
 
 public class MediumGame extends BaseGame{
     public MediumGame(Context context) {

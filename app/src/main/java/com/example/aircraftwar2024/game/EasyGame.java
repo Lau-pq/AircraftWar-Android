@@ -1,9 +1,8 @@
 package com.example.aircraftwar2024.game;
 
 import android.content.Context;
-import android.os.Handler;
 
-import com.example.aircraftwar2024.ImageManager;
+import com.example.aircraftwar2024.application.ImageManager;
 import com.example.aircraftwar2024.aircraft.AbstractEnemyAircraft;
 
 import java.util.LinkedList;
@@ -19,8 +18,7 @@ public class EasyGame extends BaseGame{
     }
 
     @Override
-    protected void tick() {
-    }
+    protected void tick() {}
 
     /**
      * 简单模式没有 boss

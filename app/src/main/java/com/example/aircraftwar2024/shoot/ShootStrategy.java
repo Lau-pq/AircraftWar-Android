@@ -19,7 +19,7 @@ public interface ShootStrategy {
      * @param abstractAircraft 子弹发射源
      * @return 射击出的子弹List
      */
-    public abstract List<AbstractBullet> shootWithStrategy(AbstractAircraft abstractAircraft);
+    List<AbstractBullet> shootWithStrategy(AbstractAircraft abstractAircraft);
 
 
 }

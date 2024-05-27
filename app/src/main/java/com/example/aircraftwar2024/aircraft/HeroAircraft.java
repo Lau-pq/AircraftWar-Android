@@ -1,6 +1,6 @@
 package com.example.aircraftwar2024.aircraft;
 
-import com.example.aircraftwar2024.ImageManager;
+import com.example.aircraftwar2024.application.ImageManager;
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.shoot.DirectShoot;
 

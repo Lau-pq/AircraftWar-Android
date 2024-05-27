@@ -1,7 +1,7 @@
 package com.example.aircraftwar2024.factory.enemy_factory;
 
 
-import com.example.aircraftwar2024.ImageManager;
+import com.example.aircraftwar2024.application.ImageManager;
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.aircraft.AbstractEnemyAircraft;
 import com.example.aircraftwar2024.aircraft.EliteEnemy;
