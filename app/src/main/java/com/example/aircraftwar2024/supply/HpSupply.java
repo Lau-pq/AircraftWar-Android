@@ -1,7 +1,11 @@
 package com.example.aircraftwar2024.supply;
 
 
+import android.util.Log;
+
 import com.example.aircraftwar2024.aircraft.HeroAircraft;
+
+import java.util.Objects;
 
 /**
  * 加血道具：增加HP值。
@@ -18,6 +22,7 @@ public class HpSupply extends AbstractFlyingSupply {
 
     @Override
     public void activate() {
+        Log.d("HP", "1");
         HeroAircraft.getHeroAircraft().increaseHp(increasedHp);
         System.out.println("HpSupply active");
     }

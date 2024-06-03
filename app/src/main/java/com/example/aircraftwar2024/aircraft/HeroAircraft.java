@@ -1,8 +1,10 @@
 package com.example.aircraftwar2024.aircraft;
 
+
 import com.example.aircraftwar2024.application.ImageManager;
 import com.example.aircraftwar2024.activity.GameActivity;
 import com.example.aircraftwar2024.shoot.DirectShoot;
+
 
 /**
  * 英雄飞机，游戏玩家操控，遵循单例模式（singleton)
@@ -21,7 +23,7 @@ public class HeroAircraft extends AbstractAircraft {
         volatile 可以避免重排序。
     */
     /** 英雄机对象单例 */
-    private volatile static HeroAircraft heroAircraft;
+    public volatile static HeroAircraft heroAircraft;
 
     /**
      * 单例模式：私有化构造方法
@@ -61,5 +63,6 @@ public class HeroAircraft extends AbstractAircraft {
     @Override
     public void vanish() {
         super.vanish();
+        heroAircraft = null;
     }
 }

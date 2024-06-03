@@ -1,12 +1,11 @@
 package com.example.aircraftwar2024.activity;
 
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -25,10 +24,12 @@ import java.util.List;
 import java.util.Map;
 
 public class RankingActivity extends AppCompatActivity {
+    private static final String TAG = "RankingActivity";
 
     private SQLiteOpenHelper dbOpenHelper;
     private int size = 0;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +52,7 @@ public class RankingActivity extends AppCompatActivity {
         }
         mode.setText(modeName);
 
-        dbOpenHelper = new DbOpenHelper(this, "ranking", null, gameType);
+        dbOpenHelper = new DbOpenHelper(this, "ranking", null, 1);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         if (record != null) {
             db.execSQL("INSERT INTO records(id, name, score, time) VALUES(?, ?, ?, ?)", new Object[]{size, record.getName(), record.getScore(), record.getTime()});
@@ -87,8 +88,11 @@ public class RankingActivity extends AppCompatActivity {
         Button returnButton = findViewById(R.id.return_button);
         returnButton.setOnClickListener(view->{
                     // TODO: 返回首页
+                    Log.d(TAG, "return MainActivity");
+                    ActivityManager.finishActivity(RankingActivity.class);
                     ActivityManager.finishActivity(GameActivity.class);
                     ActivityManager.finishActivity(OfflineActivity.class);
+                    finish();
                 }
         );
     }
