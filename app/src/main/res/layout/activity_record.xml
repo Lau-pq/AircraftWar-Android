@@ -18,11 +18,63 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.002" />
 
+    <TextView
+        android:id="@+id/rank_title"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="@string/rank_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.007"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode"
+        app:layout_constraintVertical_bias="0.005" />
+
+    <TextView
+        android:id="@+id/name_title"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="@string/name_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.211"
+        app:layout_constraintLeft_toRightOf="@+id/rank_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode"
+        app:layout_constraintVertical_bias="0.004" />
+
+    <TextView
+        android:id="@+id/score_title"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:text="@string/score_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintLeft_toRightOf="@+id/name_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode"
+        app:layout_constraintVertical_bias="0.004" />
+
+    <TextView
+        android:id="@+id/time_title"
+        android:layout_width="180dp"
+        android:layout_height="19dp"
+        android:text="@string/time_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.917"
+        app:layout_constraintLeft_toRightOf="@+id/score_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode"
+        app:layout_constraintVertical_bias="0.004" />
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/mode"
+        app:layout_constraintTop_toBottomOf="@+id/name_title"
         app:layout_constraintStart_toStartOf="parent" >
 
     </ListView>
