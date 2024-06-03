@@ -23,11 +23,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class RankingActivity extends AppCompatActivity {
 
     private SQLiteOpenHelper dbOpenHelper;
-    private int size = 0;
+    private String tableName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +45,37 @@ public class RankingActivity extends AppCompatActivity {
         TextView mode = findViewById(R.id.mode);
         String modeName;
         switch (gameType) {
-            case 1 -> modeName = "简单模式";
-            case 2 -> modeName = "普通模式";
-            case 3 -> modeName = "困难模式";
-            default -> modeName = "无模式";
+            case 1 -> {
+                modeName = "简单模式";
+                tableName = "easyRecords";
+            }
+            case 2 -> {
+                modeName = "普通模式";
+                tableName = "mediumRecords";
+            }
+            case 3 -> {
+                modeName = "困难模式";
+                tableName = "hardRecords";
+            }
+            default -> {
+                modeName = "无模式";
+                tableName = "无表格";
+            }
         }
         mode.setText(modeName);
 
-        dbOpenHelper = new DbOpenHelper(this, "ranking", null, gameType);
+        dbOpenHelper = new DbOpenHelper(this, "ranking", null, 1);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         if (record != null) {
-            db.execSQL("INSERT INTO records(id, name, score, time) VALUES(?, ?, ?, ?)", new Object[]{size, record.getName(), record.getScore(), record.getTime()});
+            String sql = String.format("INSERT INTO %s (name, score, time) VALUES(?, ?, ?, ?)", tableName);
+            db.execSQL(sql, new Object[]{record.getName(), record.getScore(), record.getTime()});
         }
 
         ListView list = findViewById(R.id.list);
+        List<Map<String, Object>> adapterData = getData(db);
         SimpleAdapter simpleAdapter = new SimpleAdapter(
                 this,
-                getData(db),
+                adapterData,
                 R.layout.activity_item,
                 new String[]{"排名", "用户名", "得分", "时间"},
                 new int[]{R.id.rank, R.id.name, R.id.score, R.id.time}
@@ -75,7 +90,9 @@ public class RankingActivity extends AppCompatActivity {
                     .setTitle("提示")
                     .setMessage("确定删除该条记录么")
                     .setPositiveButton("确定", (dialog, which) -> {
-                        // TODO 删除一行数据 使用 position
+                        String time = Objects.requireNonNull(adapterData.get(position).get("时间")).toString();
+                        String sql = String.format("DELETE FROM %s WHERE personid = ?", tableName);
+                        db.execSQL(sql, new String[]{time});
                         simpleAdapter.notifyDataSetChanged();
                     })
                     .setNegativeButton("取消", (dialog, which) -> {})
@@ -96,7 +113,7 @@ public class RankingActivity extends AppCompatActivity {
     private List<Map<String, Object>> getData(SQLiteDatabase db) {
         List<Map<String, Object>> itemList = new ArrayList<>();
 
-        Cursor cursor = db.query("records", null, null, null, null, null, "score DESC");
+        Cursor cursor = db.query(tableName, null, null, null, null, null, "score DESC");
         int rank = 1;
         if (cursor != null) {
             while (cursor.moveToNext()) {
