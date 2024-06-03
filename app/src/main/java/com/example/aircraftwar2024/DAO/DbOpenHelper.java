@@ -13,7 +13,9 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE records(id INT, name VARCHAR(50), score INT NOT NULL, time VARCHAR(100))");
+        db.execSQL("CREATE TABLE easyRecords(name VARCHAR(50), score INT NOT NULL, time VARCHAR(100))");
+        db.execSQL("CREATE TABLE mediumRecords(name VARCHAR(50), score INT NOT NULL, time VARCHAR(100))");
+        db.execSQL("CREATE TABLE hardRecords(name VARCHAR(50), score INT NOT NULL, time VARCHAR(100))");
     }
 
     @Override

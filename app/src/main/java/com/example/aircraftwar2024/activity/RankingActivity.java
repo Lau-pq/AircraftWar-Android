@@ -1,11 +1,11 @@
 package com.example.aircraftwar2024.activity;
 
+
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -22,12 +22,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class RankingActivity extends AppCompatActivity {
     private static final String TAG = "RankingActivity";
 
-    private SQLiteOpenHelper dbOpenHelper;
-    private int size = 0;
+    private String tableName;
 
     @SuppressLint("NewApi")
     @Override
@@ -45,30 +46,42 @@ public class RankingActivity extends AppCompatActivity {
         TextView mode = findViewById(R.id.mode);
         String modeName;
         switch (gameType) {
-            case 1 -> modeName = "简单模式";
-            case 2 -> modeName = "普通模式";
-            case 3 -> modeName = "困难模式";
-            default -> modeName = "无模式";
+            case 1 -> {
+                modeName = "简单模式";
+                tableName = "easyRecords";
+            }
+            case 2 -> {
+                modeName = "普通模式";
+                tableName = "mediumRecords";
+            }
+            case 3 -> {
+                modeName = "困难模式";
+                tableName = "hardRecords";
+            }
+            default -> {
+                modeName = "无模式";
+                tableName = "无表格";
+            }
         }
         mode.setText(modeName);
 
-        dbOpenHelper = new DbOpenHelper(this, "ranking", null, 1);
+        SQLiteOpenHelper dbOpenHelper = new DbOpenHelper(this, "ranking", null, 1);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         if (record != null) {
-            db.execSQL("INSERT INTO records(id, name, score, time) VALUES(?, ?, ?, ?)", new Object[]{size, record.getName(), record.getScore(), record.getTime()});
+            String sql = String.format("INSERT INTO %s (name, score, time) VALUES(?, ?, ?)", tableName);
+            db.execSQL(sql, new Object[]{record.getName(), record.getScore(), record.getTime()});
         }
 
         ListView list = findViewById(R.id.list);
+        AtomicReference<List<Map<String, Object>>> adapterData = new AtomicReference<>(getData(db));
         SimpleAdapter simpleAdapter = new SimpleAdapter(
                 this,
-                getData(db),
+                adapterData.get(),
                 R.layout.activity_item,
                 new String[]{"排名", "用户名", "得分", "时间"},
                 new int[]{R.id.rank, R.id.name, R.id.score, R.id.time}
         );
-
         list.setAdapter(simpleAdapter);
-        dbOpenHelper.close();
 
         // TODO: 删除弹窗
         list.setOnItemClickListener((parent, view, position, id) -> {
@@ -76,14 +89,17 @@ public class RankingActivity extends AppCompatActivity {
                     .setTitle("提示")
                     .setMessage("确定删除该条记录么")
                     .setPositiveButton("确定", (dialog, which) -> {
-                        // TODO 删除一行数据 使用 position
+                        String time = Objects.requireNonNull(adapterData.get().get(position).get("时间")).toString();
+                        String sql = String.format("DELETE FROM %s WHERE time = ?", tableName);
+                        db.execSQL(sql, new String[]{time});
+                        adapterData.get().remove(position);
+                        adapterData.set(getData(db));
                         simpleAdapter.notifyDataSetChanged();
                     })
                     .setNegativeButton("取消", (dialog, which) -> {})
                     .create();
             alertDialog.show();
         });
-
 
         Button returnButton = findViewById(R.id.return_button);
         returnButton.setOnClickListener(view->{
@@ -93,6 +109,7 @@ public class RankingActivity extends AppCompatActivity {
                     ActivityManager.finishActivity(GameActivity.class);
                     ActivityManager.finishActivity(OfflineActivity.class);
                     finish();
+                    dbOpenHelper.close();
                 }
         );
     }
@@ -100,7 +117,7 @@ public class RankingActivity extends AppCompatActivity {
     private List<Map<String, Object>> getData(SQLiteDatabase db) {
         List<Map<String, Object>> itemList = new ArrayList<>();
 
-        Cursor cursor = db.query("records", null, null, null, null, null, "score DESC");
+        Cursor cursor = db.query(tableName, null, null, null, null, null, "score DESC");
         int rank = 1;
         if (cursor != null) {
             while (cursor.moveToNext()) {

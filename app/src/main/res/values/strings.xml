@@ -8,4 +8,8 @@
     <string name="normalMode">普通模式</string>
     <string name="hardMode">困难模式</string>
     <string name="retrun">返回首页</string>
+    <string name="rank_name">排名</string>
+    <string name="name_title">用户名</string>
+    <string name="score_title">得分</string>
+    <string name="time_title">时间</string>
 </resources>
