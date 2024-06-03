@@ -106,7 +106,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      */
     private final int timeInterval = 16;
 
-    public static HeroAircraft heroAircraft;
+    private HeroAircraft heroAircraft;
 
     protected final List<AbstractEnemyAircraft> enemyAircrafts;
     private final List<AbstractFlyingSupply> flyingSupplies;
