@@ -12,10 +12,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.aircraftwar2024.DAO.Record;
+import com.example.aircraftwar2024.aircraft.HeroAircraft;
 import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.game.EasyGame;
 import com.example.aircraftwar2024.game.HardGame;
 import com.example.aircraftwar2024.game.MediumGame;
+
+import java.util.Objects;
 
 
 public class GameActivity extends AppCompatActivity {

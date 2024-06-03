@@ -1,5 +1,7 @@
 package com.example.aircraftwar2024.activity;
 
+
+import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -28,6 +30,7 @@ public class RankingActivity extends AppCompatActivity {
 
     private String tableName;
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,8 +104,11 @@ public class RankingActivity extends AppCompatActivity {
         Button returnButton = findViewById(R.id.return_button);
         returnButton.setOnClickListener(view->{
                     // TODO: 返回首页
+                    Log.d(TAG, "return MainActivity");
+                    ActivityManager.finishActivity(RankingActivity.class);
                     ActivityManager.finishActivity(GameActivity.class);
                     ActivityManager.finishActivity(OfflineActivity.class);
+                    finish();
                     dbOpenHelper.close();
                 }
         );

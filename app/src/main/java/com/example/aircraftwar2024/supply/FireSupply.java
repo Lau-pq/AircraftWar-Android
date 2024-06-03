@@ -1,6 +1,8 @@
 package com.example.aircraftwar2024.supply;
 
 
+import android.util.Log;
+
 import com.example.aircraftwar2024.aircraft.HeroAircraft;
 import com.example.aircraftwar2024.shoot.ShootStrategy;
 
@@ -35,17 +37,17 @@ public class FireSupply extends AbstractFlyingSupply {
          */
         Runnable fireUpTask = () -> {
             try {
-
+                Log.d("fire", "1");
                 ShootStrategy shootStrategy = HeroAircraft.getHeroAircraft().getShootStrategy(); // 英雄机当前射击策略
                 int oldNum = HeroAircraft.getHeroAircraft().getShootNum();
                 shootNumStack.push(oldNum);
 
                 // 同时射出的子弹数 +1
                 int newNum = oldNum + 1;
+
                 HeroAircraft.getHeroAircraft().setShootNum(newNum);
 
                 Thread.sleep(10000); // 持续10s，之后恢复原有子弹数量
-
                 HeroAircraft.getHeroAircraft().setShootNum(shootNumStack.pop());
 
             } catch (InterruptedException e) {

@@ -38,6 +38,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -105,7 +106,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
      */
     private final int timeInterval = 16;
 
-    private HeroAircraft heroAircraft;
+    public static HeroAircraft heroAircraft;
 
     protected final List<AbstractEnemyAircraft> enemyAircrafts;
     private final List<AbstractFlyingSupply> flyingSupplies;
@@ -440,7 +441,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
             mbLoop = false;
-            heroAircraft = null;
             Log.i(TAG, "heroAircraft is not Valid");
 
             String userName = "test";
@@ -518,6 +518,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         mbLoop = true;
+        Log.d(TAG, "create");
         new Thread(this).start();
     }
 
