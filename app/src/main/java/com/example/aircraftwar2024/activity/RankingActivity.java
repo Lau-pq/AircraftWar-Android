@@ -33,6 +33,8 @@ public class RankingActivity extends AppCompatActivity {
         Button returnButton = findViewById(R.id.return_button);
         returnButton.setOnClickListener(view->{
                     // TODO: 返回首页
+                    ActivityManager.finishActivity(GameActivity.class);
+                    ActivityManager.finishActivity(OfflineActivity.class);
                 }
         );
     }

@@ -1,16 +1,17 @@
 package com.example.aircraftwar2024.activity;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.aircraftwar2024.DAO.Record;
 import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.game.EasyGame;
 import com.example.aircraftwar2024.game.HardGame;
@@ -23,9 +24,29 @@ public class GameActivity extends AppCompatActivity {
     private int gameType=0;
     public static int screenWidth,screenHeight;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityManager.addActivity(this);
+        Handler handler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(@NonNull Message msg) {
+                super.handleMessage(msg);
+                Log.d(TAG, "handleMessage");
+                if (msg.what == 1) {
+                    Intent intent = new Intent(GameActivity.this, RankingActivity.class);
+                    Record record = (Record)msg.obj;
+
+                    intent.putExtra("userName", record.getName());
+                    intent.putExtra("score",record.getScore());
+                    intent.putExtra("time", record.getTime());
+                    intent.putExtra("gameType", gameType);
+
+                    startActivity(intent);
+                }
+            }
+        };
 
         getScreenHW();
 
@@ -33,12 +54,11 @@ public class GameActivity extends AppCompatActivity {
             gameType = getIntent().getIntExtra("gameType",1);
         }
 
-        /*TODO:根据用户选择的难度加载相应的游戏界面*/
         BaseGame baseGameView;
         switch (gameType) {
-            case 1 -> baseGameView = new EasyGame(this);
-            case 2 -> baseGameView = new MediumGame(this);
-            case 3 -> baseGameView = new HardGame(this);
+            case 1 -> baseGameView = new EasyGame(this, handler);
+            case 2 -> baseGameView = new MediumGame(this, handler);
+            case 3 -> baseGameView = new HardGame(this, handler);
             default -> baseGameView = null;
         }
         setContentView(baseGameView);

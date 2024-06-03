@@ -6,6 +6,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -13,6 +15,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import androidx.annotation.NonNull;
 
+import com.example.aircraftwar2024.DAO.Record;
 import com.example.aircraftwar2024.aircraft.EliteEnemy;
 import com.example.aircraftwar2024.aircraft.MobEnemy;
 import com.example.aircraftwar2024.application.ImageManager;
@@ -30,10 +33,14 @@ import com.example.aircraftwar2024.factory.enemy_factory.EnemyFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.MobFactory;
 import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
 import com.example.aircraftwar2024.supply.BombSupply;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 
 
 /**
@@ -45,10 +52,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Callback, Runnable{
 
     public static final String TAG = "BaseGame";
+    private Handler handler;
     boolean mbLoop; //控制绘画线程的标志位
     private final SurfaceHolder mSurfaceHolder;
     private Canvas canvas;  //绘图的画布
     private final Paint mPaint;
+
+    private Record record;
 
     //点击屏幕位置
     float clickX = 0, clickY=0;
@@ -135,8 +145,9 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     private final EnemyFactory bossEnemyFactory;
     private final Random random = new Random();
 
-    public BaseGame(Context context){
+    public BaseGame(Context context, Handler handler){
         super(context);
+        this.handler = handler;
 
         mPaint = new Paint();  //设置画笔
         mSurfaceHolder = this.getHolder();
@@ -298,7 +309,10 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 clickX = motionEvent.getX();
                 clickY = motionEvent.getY();
-                heroAircraft.setLocation(clickX, clickY);
+                if (heroAircraft != null) {
+                    heroAircraft.setLocation(clickX, clickY);
+                }
+
 
                 if ( clickX<0 || clickX> GameActivity.screenWidth || clickY<0 || clickY>GameActivity.screenHeight){
                     // 防止超出边界
@@ -425,8 +439,18 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
         if (heroAircraft.notValid()) {
             gameOverFlag = true;
+            mbLoop = false;
             heroAircraft = null;
             Log.i(TAG, "heroAircraft is not Valid");
+
+            String userName = "test";
+            record = new Record(userName, score,
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+
+            Message msg =  Message.obtain();
+            msg.what = 1;
+            msg.obj = record;
+            handler.sendMessage(msg);
         }
 
     }
@@ -506,13 +530,14 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void surfaceDestroyed(@NonNull SurfaceHolder surfaceHolder) {
         mbLoop = false;
+        Log.d(TAG, "destroy");
     }
 
     @Override
     public void run() {
         while (mbLoop) {
-            action();
             draw();
+            action();
         }
     }
 }

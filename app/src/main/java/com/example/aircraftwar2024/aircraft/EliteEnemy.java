@@ -1,17 +1,6 @@
 package com.example.aircraftwar2024.aircraft;
 
 
-import android.util.Log;
-
-import com.example.aircraftwar2024.factory.supply_factory.BombSupplyFactory;
-import com.example.aircraftwar2024.factory.supply_factory.FireSupplyFactory;
-import com.example.aircraftwar2024.factory.supply_factory.HpSupplyFactory;
-import com.example.aircraftwar2024.factory.supply_factory.SupplyFactory;
-import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
-
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * 精英敌机
  * 可射击
