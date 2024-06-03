@@ -1,11 +1,6 @@
 package com.example.aircraftwar2024.aircraft;
 
 
-import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
-
-import java.util.LinkedList;
-import java.util.List;
-
 /**
  * 普通敌机
  * 不可射击

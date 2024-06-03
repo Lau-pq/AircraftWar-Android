@@ -57,4 +57,9 @@ public class HeroAircraft extends AbstractAircraft {
     public void forward() {
         // 英雄机由鼠标控制，不通过forward函数移动
     }
+
+    @Override
+    public void vanish() {
+        super.vanish();
+    }
 }
