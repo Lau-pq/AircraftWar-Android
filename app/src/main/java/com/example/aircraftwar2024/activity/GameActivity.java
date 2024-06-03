@@ -38,9 +38,7 @@ public class GameActivity extends AppCompatActivity {
                     Intent intent = new Intent(GameActivity.this, RankingActivity.class);
                     Record record = (Record)msg.obj;
 
-                    intent.putExtra("userName", record.getName());
-                    intent.putExtra("score",record.getScore());
-                    intent.putExtra("time", record.getTime());
+                    intent.putExtra("record", record);
                     intent.putExtra("gameType", gameType);
 
                     startActivity(intent);
