@@ -1,12 +1,9 @@
 package com.example.aircraftwar2024.activity;
 
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -24,10 +21,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class RankingActivity extends AppCompatActivity {
+    private static final String TAG = "RankingActivity";
 
-    private SQLiteOpenHelper dbOpenHelper;
     private String tableName;
 
     @Override
@@ -64,25 +62,23 @@ public class RankingActivity extends AppCompatActivity {
         }
         mode.setText(modeName);
 
-        dbOpenHelper = new DbOpenHelper(this, "ranking", null, 1);
+        SQLiteOpenHelper dbOpenHelper = new DbOpenHelper(this, "ranking", null, 1);
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         if (record != null) {
-            String sql = String.format("INSERT INTO %s (name, score, time) VALUES(?, ?, ?, ?)", tableName);
+            String sql = String.format("INSERT INTO %s (name, score, time) VALUES(?, ?, ?)", tableName);
             db.execSQL(sql, new Object[]{record.getName(), record.getScore(), record.getTime()});
         }
 
         ListView list = findViewById(R.id.list);
-        List<Map<String, Object>> adapterData = getData(db);
+        AtomicReference<List<Map<String, Object>>> adapterData = new AtomicReference<>(getData(db));
         SimpleAdapter simpleAdapter = new SimpleAdapter(
                 this,
-                adapterData,
+                adapterData.get(),
                 R.layout.activity_item,
                 new String[]{"排名", "用户名", "得分", "时间"},
                 new int[]{R.id.rank, R.id.name, R.id.score, R.id.time}
         );
-
         list.setAdapter(simpleAdapter);
-        dbOpenHelper.close();
 
         // TODO: 删除弹窗
         list.setOnItemClickListener((parent, view, position, id) -> {
@@ -90,9 +86,11 @@ public class RankingActivity extends AppCompatActivity {
                     .setTitle("提示")
                     .setMessage("确定删除该条记录么")
                     .setPositiveButton("确定", (dialog, which) -> {
-                        String time = Objects.requireNonNull(adapterData.get(position).get("时间")).toString();
-                        String sql = String.format("DELETE FROM %s WHERE personid = ?", tableName);
+                        String time = Objects.requireNonNull(adapterData.get().get(position).get("时间")).toString();
+                        String sql = String.format("DELETE FROM %s WHERE time = ?", tableName);
                         db.execSQL(sql, new String[]{time});
+                        adapterData.get().remove(position);
+                        adapterData.set(getData(db));
                         simpleAdapter.notifyDataSetChanged();
                     })
                     .setNegativeButton("取消", (dialog, which) -> {})
@@ -100,12 +98,12 @@ public class RankingActivity extends AppCompatActivity {
             alertDialog.show();
         });
 
-
         Button returnButton = findViewById(R.id.return_button);
         returnButton.setOnClickListener(view->{
                     // TODO: 返回首页
                     ActivityManager.finishActivity(GameActivity.class);
                     ActivityManager.finishActivity(OfflineActivity.class);
+                    dbOpenHelper.close();
                 }
         );
     }
