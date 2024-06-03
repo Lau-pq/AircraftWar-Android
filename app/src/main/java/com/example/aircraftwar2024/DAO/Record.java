@@ -1,6 +1,8 @@
 package com.example.aircraftwar2024.DAO;
 
-public class Record {
+import java.io.Serializable;
+
+public class Record implements Serializable {
     private String name;
     private int score;
     private String time;

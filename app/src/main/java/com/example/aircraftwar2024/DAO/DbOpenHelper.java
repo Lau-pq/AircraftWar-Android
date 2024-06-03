@@ -13,7 +13,7 @@ public class DbOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("");
+        db.execSQL("CREATE TABLE records(id INT, name VARCHAR(50), score INT NOT NULL, time VARCHAR(100))");
     }
 
     @Override
