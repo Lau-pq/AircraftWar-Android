@@ -23,7 +23,7 @@ public class HeroAircraft extends AbstractAircraft {
         volatile 可以避免重排序。
     */
     /** 英雄机对象单例 */
-    public volatile static HeroAircraft heroAircraft;
+    private volatile static HeroAircraft heroAircraft;
 
     /**
      * 单例模式：私有化构造方法
