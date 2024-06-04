@@ -5,10 +5,11 @@ import android.media.AudioAttributes;
 import android.media.SoundPool;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MusicPool {
     private final SoundPool musicPool;
-    private final HashMap<Integer, Integer> soundPoolMap;
+    private final HashMap<String, Integer> soundPoolMap;
     private final Context context;
 
     public MusicPool(Context context){
@@ -24,11 +25,14 @@ public class MusicPool {
         this.context = context;
     }
 
-    public void put(int id, int sound){
-        soundPoolMap.put(id, musicPool.load(context, sound, 1));
+    public void put(Map<String, Integer> map){
+        for (String key: map.keySet()) {
+            soundPoolMap.put(key, musicPool.load(context, map.get(key), 1));
+        }
+
     }
 
-    public void play(int id){
-            musicPool.play(soundPoolMap.get(id), 1, 1, 0, 0, 1.0f);
+    public void play(String key){
+            musicPool.play(soundPoolMap.get(key), 1, 1, 0, 0, 1.0f);
     }
 }

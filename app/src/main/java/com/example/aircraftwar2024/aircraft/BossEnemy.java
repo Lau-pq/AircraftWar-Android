@@ -1,6 +1,8 @@
 package com.example.aircraftwar2024.aircraft;
 
 
+import com.example.aircraftwar2024.application.MusicManager;
+
 /**
  * BOSS 敌机
  * 可射击
@@ -18,8 +20,15 @@ public class BossEnemy extends AbstractEnemyAircraft {
         this.rate = 1.2;
         this.score = 100;
         this.supplyNum = 3;
+        MusicManager.action("boss");
     }
 
     @Override
     public void update() {}
+
+    @Override
+    public void vanish() {
+        super.vanish();
+        MusicManager.action("boss_defeated");
+    }
 }
