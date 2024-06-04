@@ -3,6 +3,8 @@ package com.example.aircraftwar2024.application;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
+
 import com.example.aircraftwar2024.R;
 
 import java.util.ArrayList;
@@ -41,7 +43,7 @@ public class MusicPlayer {
 
     public void stopBossBgm() {
         if (bgmBossMediaPlayer != null && bgmBossMediaPlayer.isPlaying()) {
-            bgmBossMediaPlayer.stop();
+            bgmBossMediaPlayer.pause();
             bgmMediaPlayer.seekTo(bgmMediaPlayer.getCurrentPosition());
             bgmMediaPlayer.start();
         }

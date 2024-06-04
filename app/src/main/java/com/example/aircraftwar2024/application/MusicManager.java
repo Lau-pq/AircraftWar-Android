@@ -1,6 +1,7 @@
 package com.example.aircraftwar2024.application;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.aircraftwar2024.R;
 
@@ -18,7 +19,6 @@ public class MusicManager {
     public static int MUSIC_BULLET_HIT_PATH = R.raw.bullet_hit;
     public static int MUSIC_GAME_OVER_PATH = R.raw.game_over;
     public static int GET_SUPPLY_PATH = R.raw.get_supply;
-    private static int SOURCE_PATH;
 
     private static MusicPlayer musicPlayer;
     private static MusicPool musicPool;
@@ -40,7 +40,6 @@ public class MusicManager {
 
     public static void action(String event) {
         if(isActive) {
-            if (EVENT_MUSIC_PATH_MAP.containsKey(event)) SOURCE_PATH = EVENT_MUSIC_PATH_MAP.get(event);
             switch (event) {
                 case "begin" -> musicPlayer.playBgm();
                 case "boss" -> musicPlayer.playBossBgm();
