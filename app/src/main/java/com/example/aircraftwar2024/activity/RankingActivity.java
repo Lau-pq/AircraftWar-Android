@@ -92,8 +92,8 @@ public class RankingActivity extends AppCompatActivity {
                         String time = Objects.requireNonNull(adapterData.get().get(position).get("时间")).toString();
                         String sql = String.format("DELETE FROM %s WHERE time = ?", tableName);
                         db.execSQL(sql, new String[]{time});
-                        adapterData.get().remove(position);
-                        adapterData.set(getData(db));
+                        adapterData.get().clear();
+                        adapterData.get().addAll(getData(db));
                         simpleAdapter.notifyDataSetChanged();
                     })
                     .setNegativeButton("取消", (dialog, which) -> {})
