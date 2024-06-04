@@ -537,8 +537,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void run() {
         while (mbLoop) {
-            draw();
             action();
+            draw();
         }
     }
 }
