@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 
 import com.example.aircraftwar2024.R;
@@ -23,7 +24,7 @@ public class OfflineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_offline);
 
         if(getIntent() != null){
-            MusicManager.isActive = getIntent().getBooleanExtra("bgmOn",false);
+            MusicManager.isActive = getIntent().getBooleanExtra("bgm",false);
         }
 
         easyButton = findViewById(R.id.easy_button);
