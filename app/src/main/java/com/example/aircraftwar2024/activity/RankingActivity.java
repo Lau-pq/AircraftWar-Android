@@ -83,7 +83,6 @@ public class RankingActivity extends AppCompatActivity {
         );
         list.setAdapter(simpleAdapter);
 
-        // TODO: 删除弹窗
         list.setOnItemClickListener((parent, view, position, id) -> {
             AlertDialog alertDialog = new AlertDialog.Builder(RankingActivity.this)
                     .setTitle("提示")
