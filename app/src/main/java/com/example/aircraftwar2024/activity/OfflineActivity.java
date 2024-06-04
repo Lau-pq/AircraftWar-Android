@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.example.aircraftwar2024.R;
+import com.example.aircraftwar2024.application.MusicManager;
 
 public class OfflineActivity extends AppCompatActivity {
 
     private int gameType = 0;
-    boolean bgmOn;
     Button easyButton;
     Button mediumButton;
     Button hardButton;
@@ -23,7 +23,7 @@ public class OfflineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_offline);
 
         if(getIntent() != null){
-            bgmOn = getIntent().getBooleanExtra("bgmOn",false);
+            MusicManager.isActive = getIntent().getBooleanExtra("bgmOn",false);
         }
 
         easyButton = findViewById(R.id.easy_button);

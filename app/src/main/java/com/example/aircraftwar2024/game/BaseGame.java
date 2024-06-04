@@ -24,6 +24,7 @@ import com.example.aircraftwar2024.aircraft.AbstractAircraft;
 import com.example.aircraftwar2024.aircraft.AbstractEnemyAircraft;
 import com.example.aircraftwar2024.aircraft.BossEnemy;
 import com.example.aircraftwar2024.aircraft.HeroAircraft;
+import com.example.aircraftwar2024.application.MusicManager;
 import com.example.aircraftwar2024.basic.AbstractFlyingObject;
 import com.example.aircraftwar2024.basic.FlyingsObserver;
 import com.example.aircraftwar2024.bullet.AbstractBullet;
@@ -148,6 +149,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     public BaseGame(Context context, Handler handler){
         super(context);
+        MusicManager.initial(context);
         this.handler = handler;
 
         mPaint = new Paint();  //设置画笔
@@ -385,6 +387,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                 if (enemyAircraft.crash(bullet)) {
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
+                    MusicManager.action("hit");
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
@@ -536,9 +539,11 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void run() {
+        MusicManager.action("begin");
         while (mbLoop) {
             action();
             draw();
         }
+        MusicManager.action("over");
     }
 }
