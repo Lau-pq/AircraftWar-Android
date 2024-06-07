@@ -43,7 +43,8 @@ public class MusicPlayer {
 
     public void stopBossBgm() {
         if (bgmBossMediaPlayer != null && bgmBossMediaPlayer.isPlaying()) {
-            bgmBossMediaPlayer.pause();
+            bgmBossMediaPlayer.stop();
+            bgmBossMediaPlayer = null;
             bgmMediaPlayer.seekTo(bgmMediaPlayer.getCurrentPosition());
             bgmMediaPlayer.start();
         }
