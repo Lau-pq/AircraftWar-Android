@@ -36,11 +36,6 @@ public class MainActivity extends AppCompatActivity {
         onlineButton = findViewById(R.id.online_button);
         bgmGroup = findViewById(R.id.bgm_group);
 
-        String selectText = ((RadioButton)findViewById(bgmGroup.getCheckedRadioButtonId())).getText().toString();
-        boolean bgmOn = selectText.equals("开启音效");
-
-        // TODO 将 MusicManager.isActive 在这里赋值
-
         handler = new Handler(getMainLooper()) {
             @Override
             public void handleMessage(@NonNull Message msg) {
@@ -51,14 +46,16 @@ public class MainActivity extends AppCompatActivity {
         };
 
         offlineButton.setOnClickListener(view -> {
+            String selectText = ((RadioButton)findViewById(bgmGroup.getCheckedRadioButtonId())).getText().toString();
+            MusicManager.isActive = selectText.equals("开启音效");
             Intent intent = new Intent(MainActivity.this, OfflineActivity.class);
-            intent.putExtra("bgm", bgmOn);
             startActivity(intent);
         });
 
         onlineButton.setOnClickListener(view -> {
+            String selectText = ((RadioButton)findViewById(bgmGroup.getCheckedRadioButtonId())).getText().toString();
+            MusicManager.isActive = selectText.equals("开启音效");
             Intent intent = new Intent(MainActivity.this, OnlineActivity.class);
-            intent.putExtra("bgm", bgmOn);
             startActivity(intent);
         });
     }
