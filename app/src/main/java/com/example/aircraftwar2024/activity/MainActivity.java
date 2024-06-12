@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     case GameMessage.enemy -> {
-                        BaseGame.enemyScore = (int) msg.obj;
+                        BaseGame.enemyScore = Integer.parseInt((String) msg.obj);
                     }
                 }
             }
