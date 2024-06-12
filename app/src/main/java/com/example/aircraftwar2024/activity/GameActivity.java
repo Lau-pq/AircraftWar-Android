@@ -17,6 +17,7 @@ import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.game.EasyGame;
 import com.example.aircraftwar2024.game.HardGame;
 import com.example.aircraftwar2024.game.MediumGame;
+import com.example.aircraftwar2024.message.GameMessage;
 
 import java.util.Objects;
 
@@ -37,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
                 Log.d(TAG, "handleMessage");
-                if (msg.what == 1) {
+                if (msg.what == GameMessage.over) {
                     Intent intent = new Intent(GameActivity.this, RankingActivity.class);
                     Record record = (Record)msg.obj;
 

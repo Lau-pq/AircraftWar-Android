@@ -2,6 +2,7 @@ package com.example.aircraftwar2024.aircraft;
 
 
 import com.example.aircraftwar2024.application.MusicManager;
+import com.example.aircraftwar2024.message.MusicMessage;
 
 /**
  * BOSS 敌机
@@ -20,7 +21,7 @@ public class BossEnemy extends AbstractEnemyAircraft {
         this.rate = 1.2;
         this.score = 100;
         this.supplyNum = 3;
-        MusicManager.action("boss");
+        MusicManager.action(MusicMessage.boss);
     }
 
     @Override
@@ -29,6 +30,6 @@ public class BossEnemy extends AbstractEnemyAircraft {
     @Override
     public void vanish() {
         super.vanish();
-        MusicManager.action("boss_defeated");
+        MusicManager.action(MusicMessage.boss_defeated);
     }
 }

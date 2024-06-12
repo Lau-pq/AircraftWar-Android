@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.aircraftwar2024.aircraft.HeroAircraft;
 import com.example.aircraftwar2024.application.MusicManager;
+import com.example.aircraftwar2024.message.MusicMessage;
 
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public class HpSupply extends AbstractFlyingSupply {
         Log.d("HP", "1");
         HeroAircraft.getHeroAircraft().increaseHp(increasedHp);
         System.out.println("HpSupply active");
-        MusicManager.action("supply");
+        MusicManager.action(MusicMessage.supply);
     }
 
 }

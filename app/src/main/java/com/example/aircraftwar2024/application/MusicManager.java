@@ -1,9 +1,9 @@
 package com.example.aircraftwar2024.application;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.aircraftwar2024.R;
+import com.example.aircraftwar2024.message.MusicMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,12 +24,12 @@ public class MusicManager {
     private static MusicPool musicPool;
 
     static {
-        EVENT_MUSIC_PATH_MAP.put("begin", MUSIC_BGM_PATH);
-        EVENT_MUSIC_PATH_MAP.put("boss", MUSIC_BGM_BOSS_PATH);
-        EVENT_MUSIC_PATH_MAP.put("bomb", MUSIC_BOMB_EXPLOSION_PATH);
-        EVENT_MUSIC_PATH_MAP.put("hit", MUSIC_BULLET_HIT_PATH);
-        EVENT_MUSIC_PATH_MAP.put("over", MUSIC_GAME_OVER_PATH);
-        EVENT_MUSIC_PATH_MAP.put("supply", GET_SUPPLY_PATH);
+        EVENT_MUSIC_PATH_MAP.put(MusicMessage.begin, MUSIC_BGM_PATH);
+        EVENT_MUSIC_PATH_MAP.put(MusicMessage.boss, MUSIC_BGM_BOSS_PATH);
+        EVENT_MUSIC_PATH_MAP.put(MusicMessage.bomb, MUSIC_BOMB_EXPLOSION_PATH);
+        EVENT_MUSIC_PATH_MAP.put(MusicMessage.hit, MUSIC_BULLET_HIT_PATH);
+        EVENT_MUSIC_PATH_MAP.put(MusicMessage.over, MUSIC_GAME_OVER_PATH);
+        EVENT_MUSIC_PATH_MAP.put(MusicMessage.supply, GET_SUPPLY_PATH);
     }
 
     public static void initial(Context context) {
@@ -41,11 +41,11 @@ public class MusicManager {
     public static void action(String event) {
         if(isActive) {
             switch (event) {
-                case "begin" -> musicPlayer.playBgm();
-                case "boss" -> musicPlayer.playBossBgm();
-                case "bomb", "hit", "supply" -> musicPool.play(event);
-                case "boss_defeated" -> musicPlayer.stopBossBgm();
-                case "over" -> {
+                case MusicMessage.begin -> musicPlayer.playBgm();
+                case MusicMessage.boss -> musicPlayer.playBossBgm();
+                case MusicMessage.bomb, MusicMessage.hit, MusicMessage.supply -> musicPool.play(event);
+                case MusicMessage.boss_defeated -> musicPlayer.stopBossBgm();
+                case MusicMessage.over -> {
                     musicPool.play(event);
                     musicPlayer.release();
                 }
