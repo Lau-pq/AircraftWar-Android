@@ -3,6 +3,7 @@ package com.example.aircraftwar2024.supply;
 
 import com.example.aircraftwar2024.application.MusicManager;
 import com.example.aircraftwar2024.basic.FlyingsObserver;
+import com.example.aircraftwar2024.message.MusicMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class BombSupply extends AbstractFlyingSupply {
 
     @Override
     public void activate() {
-        MusicManager.action("bomb");
+        MusicManager.action(MusicMessage.bomb);
         System.out.println("BombSupply active");
         notifyAllFlyings();
     }

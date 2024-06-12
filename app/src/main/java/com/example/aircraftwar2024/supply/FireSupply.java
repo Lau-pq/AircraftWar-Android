@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.example.aircraftwar2024.aircraft.HeroAircraft;
 import com.example.aircraftwar2024.application.MusicManager;
+import com.example.aircraftwar2024.message.MusicMessage;
 import com.example.aircraftwar2024.shoot.ShootStrategy;
 
 import java.util.Stack;
@@ -58,6 +59,6 @@ public class FireSupply extends AbstractFlyingSupply {
 
         new Thread(fireUpTask).start();
         System.out.println("FireSupply active");
-        MusicManager.action("supply");
+        MusicManager.action(MusicMessage.supply);
     }
 }

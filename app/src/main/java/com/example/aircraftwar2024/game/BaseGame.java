@@ -1,5 +1,6 @@
 package com.example.aircraftwar2024.game;
 
+import android.app.GameManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -32,6 +33,8 @@ import com.example.aircraftwar2024.factory.enemy_factory.BossFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.EliteFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.EnemyFactory;
 import com.example.aircraftwar2024.factory.enemy_factory.MobFactory;
+import com.example.aircraftwar2024.message.GameMessage;
+import com.example.aircraftwar2024.message.MusicMessage;
 import com.example.aircraftwar2024.supply.AbstractFlyingSupply;
 import com.example.aircraftwar2024.supply.BombSupply;
 
@@ -387,7 +390,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                 if (enemyAircraft.crash(bullet)) {
                     // 敌机撞击到英雄机子弹
                     // 敌机损失一定生命值
-                    MusicManager.action("hit");
+                    MusicManager.action(MusicMessage.hit);
                     enemyAircraft.decreaseHp(bullet.getPower());
                     bullet.vanish();
                     if (enemyAircraft.notValid()) {
@@ -451,7 +454,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
                     LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 
             Message msg =  Message.obtain();
-            msg.what = 1;
+            msg.what = GameMessage.over;
             msg.obj = record;
             handler.sendMessage(msg);
         }
@@ -539,11 +542,11 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
     @Override
     public void run() {
-        MusicManager.action("begin");
+        MusicManager.action(MusicMessage.begin);
         while (mbLoop) {
             action();
             draw();
         }
-        MusicManager.action("over");
+        MusicManager.action(MusicMessage.over);
     }
 }
