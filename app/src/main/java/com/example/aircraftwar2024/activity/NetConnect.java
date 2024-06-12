@@ -5,6 +5,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.example.aircraftwar2024.aircraft.HeroAircraft;
+import com.example.aircraftwar2024.game.BaseGame;
 import com.example.aircraftwar2024.message.GameMessage;
 
 import java.io.BufferedReader;
@@ -32,7 +33,7 @@ public class NetConnect implements Runnable{
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress
-                    ("10.0.2.2", 9999), 5000);
+                    ("10.250.41.201", 9999), 5000);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
             writer = new PrintWriter(new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8)), true);
@@ -45,7 +46,7 @@ public class NetConnect implements Runnable{
                     while((fromserver = reader.readLine()) != null) {
                         Message msg = new Message();
                         switch (fromserver) {
-                            case "start" -> msg.what = GameMessage.start;
+                            case "begin" -> msg.what = GameMessage.begin;
                             case "over" -> msg.what = GameMessage.over;
                             default -> msg.what = GameMessage.enemy;
                         }
@@ -60,10 +61,10 @@ public class NetConnect implements Runnable{
             try {
                 while (true) {
                     Thread.sleep(50);
-                    int score = 0;
-                    writer.println("Score: " + score);
+                    int score = BaseGame.score;
+                    writer.println(score);
                     if (HeroAircraft.getHeroAircraft().getHp() <= 0) {
-                        writer.println("Over");
+                        writer.println("over");
                     }
                 }
             } catch (InterruptedException e) {

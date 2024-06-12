@@ -15,6 +15,10 @@ import android.widget.RadioGroup;
 
 import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.application.MusicManager;
+import com.example.aircraftwar2024.game.BaseGame;
+import com.example.aircraftwar2024.message.GameMessage;
+
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup bgmGroup;
 
     private Handler handler;
-    private AlertDialog alertDialog;
+    private int gameType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +44,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
-
+                    case GameMessage.begin -> {
+                        gameType = 2;
+                        Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                        intent.putExtra("gameType", gameType);
+                        startActivity(intent);
+                    }
+                    case GameMessage.over -> {
+                        Intent intent = new Intent(MainActivity.this, EndActivity.class);
+                        startActivity(intent);
+                    }
+                    case GameMessage.enemy -> {
+                        BaseGame.enemyScore = (int) msg.obj;
+                    }
                 }
             }
         };
@@ -55,8 +71,12 @@ public class MainActivity extends AppCompatActivity {
         onlineButton.setOnClickListener(view -> {
             String selectText = ((RadioButton)findViewById(bgmGroup.getCheckedRadioButtonId())).getText().toString();
             MusicManager.isActive = selectText.equals("开启音效");
-            Intent intent = new Intent(MainActivity.this, OnlineActivity.class);
-            startActivity(intent);
+            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                    .setMessage("匹配中，请等待……")
+                    .setCancelable(false)
+                    .create();
+            alertDialog.show();
+            new Thread(new NetConnect(handler)).start();
         });
     }
 }

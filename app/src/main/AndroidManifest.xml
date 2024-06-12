@@ -36,6 +36,10 @@
             android:name=".activity.RankingActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".activity.EndActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
