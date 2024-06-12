@@ -15,16 +15,28 @@
         android:src="@drawable/bg_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/start_button"
+        android:id="@+id/offline_button"
         android:layout_width="115dp"
         android:layout_height="55dp"
         android:text="@string/offlineStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.559"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/online_button"
+        android:layout_width="115dp"
+        android:layout_height="55dp"
+        android:text="@string/onlineStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +53,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/start_button"
+        app:layout_constraintTop_toTopOf="@id/online_button"
         app:layout_constraintVertical_bias="0.554">
 
         <RadioButton
