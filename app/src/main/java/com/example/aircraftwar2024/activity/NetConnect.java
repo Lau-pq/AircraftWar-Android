@@ -25,6 +25,8 @@ public class NetConnect implements Runnable{
     private BufferedReader reader;
     private Handler toCilentHandle;
 
+    private String hostname = "10.250.41.201";
+
     public NetConnect(Handler handler) {
         this.toCilentHandle = handler;
     }
@@ -33,7 +35,7 @@ public class NetConnect implements Runnable{
         try {
             socket = new Socket();
             socket.connect(new InetSocketAddress
-                    ("10.250.41.201", 9999), 5000);
+                    (hostname, 9999), 5000);
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
             writer = new PrintWriter(new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8)), true);
@@ -59,14 +61,12 @@ public class NetConnect implements Runnable{
             }).start();
 
             try {
-                while (true) {
+                while (!BaseGame.gameOverFlag) {
                     Thread.sleep(50);
                     int score = BaseGame.score;
                     writer.println(score);
-                    if (HeroAircraft.getHeroAircraft().getHp() <= 0) {
-                        writer.println("over");
-                    }
                 }
+                writer.println("over");
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
