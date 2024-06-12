@@ -124,6 +124,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public static int score = 0;
     public static int enemyScore = 0;
 
+    public static boolean online = false;
+
 
     /**
      * 周期（ms)
@@ -450,14 +452,16 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             mbLoop = false;
             Log.i(TAG, "heroAircraft is not Valid");
 
-            String userName = "test";
-            record = new Record(userName, score,
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+            if (!online) {
+                String userName = "test";
+                record = new Record(userName, score,
+                        LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
 
-            Message msg =  Message.obtain();
-            msg.what = GameMessage.over;
-            msg.obj = record;
-            handler.sendMessage(msg);
+                Message msg =  Message.obtain();
+                msg.what = GameMessage.over;
+                msg.obj = record;
+                handler.sendMessage(msg);
+            }
         }
 
     }
@@ -517,8 +521,12 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         mPaint.setColor(Color.RED);
         mPaint.setTypeface(Typeface.create("my", Typeface.BOLD_ITALIC));
 
-        canvas.drawText("Score:" + score, 10, 100, mPaint);
-        canvas.drawText("Life:" + heroAircraft.getHp(), 10, 180, mPaint);
+        canvas.drawText("myScore:" + score, 10, 100, mPaint);
+        canvas.drawText("myLife:" + heroAircraft.getHp(), 10, 180, mPaint);
+
+        if (online) {
+            canvas.drawText("enemyScore:" + enemyScore, 100, 100, mPaint);
+        }
 
     }
 

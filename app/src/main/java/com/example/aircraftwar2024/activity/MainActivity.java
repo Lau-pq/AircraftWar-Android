@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     case GameMessage.over -> {
+                        BaseGame.online = true;
                         Intent intent = new Intent(MainActivity.this, EndActivity.class);
                         startActivity(intent);
                     }
