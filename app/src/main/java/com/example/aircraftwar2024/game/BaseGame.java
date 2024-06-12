@@ -121,7 +121,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     protected int enemyMaxNumber = 5;
 
     private boolean gameOverFlag = false;
-    private int score = 0;
+    public static int score = 0;
+    public static int enemyScore = 0;
 
 
     /**
