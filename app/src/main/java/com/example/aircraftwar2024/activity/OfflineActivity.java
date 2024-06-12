@@ -23,10 +23,6 @@ public class OfflineActivity extends AppCompatActivity {
         ActivityManager.addActivity(this);
         setContentView(R.layout.activity_offline);
 
-        if(getIntent() != null){
-            MusicManager.isActive = getIntent().getBooleanExtra("bgm",false);
-        }
-
         easyButton = findViewById(R.id.easy_button);
         mediumButton = findViewById(R.id.medium_button);
         hardButton = findViewById(R.id.hard_button);
