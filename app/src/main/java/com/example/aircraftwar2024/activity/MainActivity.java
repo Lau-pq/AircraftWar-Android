@@ -45,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case GameMessage.begin -> {
+                        BaseGame.online = true;
                         gameType = 2;
                         Intent intent = new Intent(MainActivity.this, GameActivity.class);
                         intent.putExtra("gameType", gameType);
                         startActivity(intent);
                     }
                     case GameMessage.over -> {
-                        BaseGame.online = true;
                         Intent intent = new Intent(MainActivity.this, EndActivity.class);
                         startActivity(intent);
                     }

@@ -17,6 +17,7 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class NetConnect implements Runnable{
     private static final String TAG = "NetConnect";
@@ -24,6 +25,7 @@ public class NetConnect implements Runnable{
     private PrintWriter writer;
     private BufferedReader reader;
     private Handler toCilentHandle;
+    private String fromserver;
 
     private String hostname = "10.250.41.201";
 
@@ -43,7 +45,6 @@ public class NetConnect implements Runnable{
 
             // start enemy over
             new Thread(() -> {
-                String fromserver;
                 try {
                     while((fromserver = reader.readLine()) != null) {
                         Message msg = new Message();
@@ -54,6 +55,7 @@ public class NetConnect implements Runnable{
                         }
                         msg.obj = fromserver;
                         toCilentHandle.sendMessage(msg);
+                        Log.i(TAG, fromserver);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -66,7 +68,9 @@ public class NetConnect implements Runnable{
                     int score = BaseGame.score;
                     writer.println(score);
                 }
-                writer.println("over");
+                while (!Objects.equals(fromserver, "over")) {
+                    writer.println("over");
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
