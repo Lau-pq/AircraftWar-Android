@@ -29,6 +29,7 @@ public class OfflineActivity extends AppCompatActivity {
         hardButton = findViewById(R.id.hard_button);
 
         BaseGame.online = false;
+        BaseGame.gameOverFlag = false;
         BaseGame.score = 0;
 
         Intent intent = new Intent(OfflineActivity.this, GameActivity.class);
