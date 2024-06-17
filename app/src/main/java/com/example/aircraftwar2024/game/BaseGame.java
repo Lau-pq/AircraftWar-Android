@@ -59,6 +59,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public static final String TAG = "BaseGame";
     private Handler handler;
     boolean mbLoop; //控制绘画线程的标志位
+    public static boolean drawLoop = false;
     private final SurfaceHolder mSurfaceHolder;
     private Canvas canvas;  //绘图的画布
     private final Paint mPaint;
@@ -123,7 +124,6 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     public static boolean gameOverFlag = false;
     public static int score = 0;
     public static int enemyScore = 0;
-
     public static boolean online = false;
 
 
@@ -531,6 +531,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void surfaceCreated(@NonNull SurfaceHolder surfaceHolder) {
         mbLoop = true;
+        drawLoop = true;
         Log.d(TAG, "create");
         new Thread(this).start();
     }
@@ -555,5 +556,8 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
             draw();
         }
         MusicManager.action(MusicMessage.over);
+        while (drawLoop) {
+            draw();
+        }
     }
 }

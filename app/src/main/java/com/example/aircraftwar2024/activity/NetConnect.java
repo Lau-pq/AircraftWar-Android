@@ -71,6 +71,7 @@ public class NetConnect implements Runnable{
                 while (!Objects.equals(fromserver, "over")) {
                     writer.println("over");
                 }
+                BaseGame.drawLoop = false;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

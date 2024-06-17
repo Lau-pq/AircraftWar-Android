@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private Handler handler;
     private int gameType;
 
+    private AlertDialog alertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
             public void handleMessage(@NonNull Message msg) {
                 switch (msg.what) {
                     case GameMessage.begin -> {
+                        alertDialog.dismiss();
                         BaseGame.online = true;
+                        BaseGame.score = 0;
+                        BaseGame.enemyScore = 0;
                         gameType = 2;
                         Intent intent = new Intent(MainActivity.this, GameActivity.class);
                         intent.putExtra("gameType", gameType);
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         onlineButton.setOnClickListener(view -> {
             String selectText = ((RadioButton)findViewById(bgmGroup.getCheckedRadioButtonId())).getText().toString();
             MusicManager.isActive = selectText.equals("开启音效");
-            AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+            alertDialog = new AlertDialog.Builder(MainActivity.this)
                     .setMessage("匹配中，请等待……")
                     .setCancelable(false)
                     .create();
