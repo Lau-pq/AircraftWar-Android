@@ -250,15 +250,13 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
 
         //当得分每超过一次bossScoreThreshold，且当前无boos机存在，则产生一次boss机
         // 普通模式boss机的血量不会变化
-        if (this.getScore() >= bossScoreThreshold && !this.existBoss()) {
+        if (score >= bossScoreThreshold && !this.existBoss()) {
             bossScoreThreshold += bossScoreThreshold;
             res.add(bossEnemyFactory.createEnemyAircraft(bossLevel));
         }
         return res;
     }
-    public int getScore() {
-        return score;
-    }
+
     private boolean existBoss() {
         for (AbstractEnemyAircraft enemyAircraft : enemyAircrafts) {
             if (enemyAircraft instanceof BossEnemy) {
@@ -525,7 +523,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         canvas.drawText("myLife:" + heroAircraft.getHp(), 10, 180, mPaint);
 
         if (online) {
-            canvas.drawText("enemyScore:" + enemyScore, 100, 100, mPaint);
+            canvas.drawText("enemyScore:" + enemyScore, 10, 260, mPaint);
         }
 
     }
