@@ -33,8 +33,8 @@ public class EndActivity extends AppCompatActivity {
         else result = "惜败";
 
         resultText.setText(result);
-        myScoreText.setText(myScore);
-        enemyScoreText.setText(enemyScore);
+        myScoreText.setText(String.valueOf(myScore));
+        enemyScoreText.setText(String.valueOf(enemyScore));
 
     }
 }

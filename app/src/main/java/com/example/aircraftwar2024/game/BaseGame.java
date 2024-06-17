@@ -525,7 +525,7 @@ public abstract class BaseGame extends SurfaceView implements SurfaceHolder.Call
         canvas.drawText("myLife:" + heroAircraft.getHp(), 10, 180, mPaint);
 
         if (online) {
-            canvas.drawText("enemyScore:" + enemyScore, 100, 100, mPaint);
+            canvas.drawText("enemyScore:" + enemyScore, 10, 260, mPaint);
         }
 
     }
