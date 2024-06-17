@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                     case GameMessage.begin -> {
                         alertDialog.dismiss();
                         BaseGame.online = true;
+                        BaseGame.gameOverFlag = false;
                         BaseGame.score = 0;
                         BaseGame.enemyScore = 0;
                         gameType = 2;
