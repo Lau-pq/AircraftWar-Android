@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import com.example.aircraftwar2024.R;
 import com.example.aircraftwar2024.application.MusicManager;
+import com.example.aircraftwar2024.game.BaseGame;
 
 public class OfflineActivity extends AppCompatActivity {
 
@@ -26,6 +27,9 @@ public class OfflineActivity extends AppCompatActivity {
         easyButton = findViewById(R.id.easy_button);
         mediumButton = findViewById(R.id.medium_button);
         hardButton = findViewById(R.id.hard_button);
+
+        BaseGame.online = false;
+        BaseGame.score = 0;
 
         Intent intent = new Intent(OfflineActivity.this, GameActivity.class);
         easyButton.setOnClickListener(view -> {
